@@ -1,0 +1,28 @@
+{
+    "name": "harness/ff-php-server-sample",
+    "description": "PHP Server Sample",
+    "keywords":[
+        "harness",
+        "harness featureflags",
+        "harness ff",
+        "harness php"
+    ],
+    "homepage": "https://github.com/harness/ff-php-server-sample",
+    "type": "project",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Bryan Jen",
+            "email": "bryan.jen@harness.io"
+        },
+        {
+            "name": "Enver Bisevac",
+            "email": "enver.bisevac@harness.io"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.4",
+        "harness/ff-server-sdk": "*@dev"
+    }
+}

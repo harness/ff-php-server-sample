@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  php:
+    image: php:7.4-fpm
+    container_name: app-sample
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    env_file:
+      - .env
+    volumes:
+      - ./:/var/www:ro
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  composer:
+    image: composer
+    container_name: composer-sample
+    volumes:
+      - ./:/app/
+    command: update && install
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: webserver-sample
+    tty: true
+    ports:
+      - "8080:80"
+    volumes:
+     - ./:/var/www:ro
+     - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  ff-proxy:
+    image: "harness/ff-proxy:0.9.6"
+    container_name: ff-proxy-sample
+    volumes:
+      - ./config:/config
+    env_file:
+      - .env
+    ports:
+      - "7002:7000"
+    networks:
+      - app-network
+  redis:
+    image: "redis:latest"
+    container_name: redis-sample
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
